@@ -13,28 +13,30 @@ const exerciseSchema = new Schema({
     default: Date.now
   },
   type: {
-
+    type: String,
+    trim: true,
+    required: "Enter the type of exercise"
   },
   weight: {
-
+    type: Number
   },
   sets: {
-
+    type: Number
   },
   reps: {
-
+    type: Number
   },
   duration: {
-
+    type: Number
   },
   distance: {
-
+    type: Number
   }
 });
 
-const Transaction = mongoose.model("Transaction", transactionSchema);
+const Exercise = mongoose.model("Exercise", exerciseSchema);
 
-module.exports = Transaction;
+module.exports = Exercise;
 
 
 // name, date, type, weight, sets, reps, duration, and distance (if cardio)

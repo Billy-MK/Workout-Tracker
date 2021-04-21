@@ -1,13 +1,9 @@
-var path = require("path");
+const router = require('express').Router();
 
-module.exports = function(app) {
-  app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-  });
-  app.get("/exercise", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/exercise.html"));
-  });
-  app.get("/stats", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/stats.html"));
-  });
-};
+const apiRoutes = require('./api');
+const HTMLroutes = require('./HTMLroutes.js');
+
+router.use('/', HTMLroutes);
+router.use('/api', apiRoutes);
+
+module.exports = router;

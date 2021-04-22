@@ -14,15 +14,25 @@ router.post("/api/workouts", (req, res) => {
       });
   });
   
+  router.get("/api/workouts/:id", (req, res) => {
+    const workoutId = req.params.id;
+    Workout.find({ _id: workoutId })
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+  })
+  
   router.put("/api/workouts/:id", (req, res) => {
-    Exercise.create(req.body)
-      .then(dbWorkout => {
-        res.json(dbWorkout);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-        console.log(err);
-      });
+    const workoutId = req.params.id;
+    Workout.updateOne({ _id: workoutId }, {
+      $push: { exercises: req.body }
+    }).catch(err => {
+      res.status(400).json(err);
+      console.log(err);
+    })
   });
   
   router.get("/api/workouts/range", (req, res) => {

@@ -24,7 +24,15 @@ router.post("/workouts", (req, res) => {
   });
   
   router.get("/workouts/range", (req, res) => {
-    Workout.find({})
+    Workout.aggregate([
+      {
+        $addFields: {
+          totalDuration: {
+            $sum: "$exercises.duration"
+          }
+        }
+      }
+    ])
       .sort({ date: -1 })
       .then(dbWorkout => {
         res.json(dbWorkout);
@@ -36,14 +44,22 @@ router.post("/workouts", (req, res) => {
   });
   
   router.get("/workouts", (req, res) => {
-    Workout.find({})
-      .sort({ date: -1 })
+    Workout.aggregate([
+      {
+        $addFields: {
+          totalDuration: {
+            $sum: "$exercises.duration"
+          }
+        }
+      }
+    ])
       .then(dbWorkout => {
         res.json(dbWorkout);
       })
       
       .catch(err => {
         res.status(400).json(err);
+        console.log(err)
       });
   });
 

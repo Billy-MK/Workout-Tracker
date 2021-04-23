@@ -17,7 +17,10 @@ router.post("/workouts", (req, res) => {
     const workoutId = req.params.id;
     Workout.updateOne({ _id: workoutId }, {
       $push: { exercises: req.body }
-    }).catch(err => {
+    }).then(dbWorkout => {
+      res.json(dbWorkout)
+    })
+    .catch(err => {
       res.status(400).json(err);
       console.log(err);
     })
@@ -56,7 +59,6 @@ router.post("/workouts", (req, res) => {
       .then(dbWorkout => {
         res.json(dbWorkout);
       })
-      
       .catch(err => {
         res.status(400).json(err);
         console.log(err)

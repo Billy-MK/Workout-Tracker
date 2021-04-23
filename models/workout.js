@@ -32,7 +32,7 @@ const workoutSchema = new Schema({
       type: Date,
       default: Date.now
     },
-    exercises: [exerciseSchema]
+    exercises: [exerciseSchema],
   });
   
   module.exports = mongoose.model("Workout", workoutSchema);
